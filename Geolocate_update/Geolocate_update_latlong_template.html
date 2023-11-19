@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="Geolocate Update Latitude/Longitude Whitelist">
+        <meta name="author" content="Marty Osterhoudt (Emergency Services Industry Software)">
+        <title>Geolocate Update Latitude/Longitude Whitelist Maintenance</title>
+        <!-- Bootstrap core CSS -->
+        <link href="css/theme.css" rel="stylesheet" type="text/css">
+        <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <!-- Custom styles for this template -->
+        <link href="style.css" rel="stylesheet">
+    </head>
+    <body>
+        <div class="container">
+            <div>
+                <h2>Geolocate Latitude/Longitude Whitelist Maintenance</h2>
+            </div>
+            <form action="/action_page.php">
+                <div class="form-check">
+                    <div class="row bg-info text-decoration-underline">
+                        <div class="col-4 ">Description</div>
+                        <div class="col-1 text-end">Northwest Latitude</div>
+                        <div class="col-1 text-end">Northwest Longitude</div>
+                        <div class="col-1 text-end">Southeast Latitude</div>
+                        <div class="col-1 text-end">Southeast Longitude</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-4">
+                            <input id="checkbox-1" type="checkbox" class="form-check-input" disabled checked> 
+                            <input id="checkbox-1-input" type="text" class="form-control col-2" value="Marty's MB Location"></input>
+                        </div>
+                        <div class="col-1 text-end">25.0</div>
+                        <div class="col-1 text-end">-25.0</div>
+                        <div class="col-1 text-end">25.0</div>
+                        <div class="col-1 text-end">-25.0</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-4">
+                            <input id="checkbox-2" type="checkbox" class="form-check-input" disabled checked> 
+                            <input id="checkbox-2-input" type="text" class="form-control col-2" value="John G.'s Location"></input>
+                        </div>
+                        <div class="col-1 text-end">25.0</div>
+                        <div class="col-1 text-end">-25.0</div>
+                        <div class="col-1 text-end">25.0</div>
+                        <div class="col-1 text-end">-25.0</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-4">
+                            <input id="checkbox-3" type="checkbox" class="form-check-input" checked> 
+                            <input id="checkbox-3-input" type="text" class="form-control col-2" value="John G.'s sister, Georgia, Savannah"></input>
+                        </div>
+                        <div class="col-1 text-end">32.2</div>
+                        <div class="col-1 text-end">-81.2</div>
+                        <div class="col-1 text-end">32.0</div>
+                        <div class="col-1 text-end">-81.0</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-4">
+                            <input id="checkbox-4" type="checkbox" class="form-check-input"> 
+                            <input id="checkbox-4-input" type="text" class="form-control col-2" value='"country_code":"US","country_name":"United States of America","region_name":"California","city_name":"Mountain View","latitude":37.405992,"longitude":-122.078515,"zip_code":"94043"'></input>
+                        </div>
+                        <div class="col-1 text-end">37.5</div>
+                        <div class="col-1 text-end">-122.2</div>
+                        <div class="col-1 text-end">37.3</div>
+                        <div class="col-1 text-end">-122.0</div>
+                    </div>
+                </div>
+                <div class="form-check">
+                    <button type="submit" class="btn btn-primary mt-3">Submit</button>
+                    <button type="cancel" class="btn btn-primary mt-3">Cancel</button>
+                </div>
+            </form>
+        </div>
+        <!-- Bootstrap core JavaScript
+    ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
+        <script src="assets/js/popper.min.js"></script>
+        <script src="bootstrap/js/bootstrap.min.js"></script>
+    </body>
+</html>
