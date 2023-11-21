@@ -25,6 +25,11 @@ class cls_LOSAP_calculations {
   public $LOSAP_achieved_total = 0;
 
 
+  // the __construct sets up a good portion of the basis of calculating LOSAP.
+  // Obtain the current point year, or default to the current year.
+  // Establish the DB connection based on argument and JSON file.
+  // Determine the maximum/cap values for each LOSAP category.
+  // Retrieve the LOSAP roster (officer roster) and the associated points for each officer/member.
   function __construct($arg_dbfileinfo){
     try{
       if(isset($_COOKIE['pointsystem_defaultyear'])){
@@ -34,7 +39,7 @@ class cls_LOSAP_calculations {
       else{
         $wrk_datetime = (int)(date('Y'));
         $this->wrk_pointyear = $wrk_datetime;
-        echo PHP_EOL.'Cookie not set.......'.$this->wrk_pointyear.PHP_EOL;
+        echo PHP_EOL.'Within LOSAP_calculations.php, the cookie containing point year is not set. Defaulting to: '.$this->wrk_pointyear.PHP_EOL;
       }
       $myfile = file_get_contents($arg_dbfileinfo);
       $this->db_info = json_decode($myfile, true);
@@ -97,6 +102,8 @@ class cls_LOSAP_calculations {
   }
 
 
+  // Function will accept an argument containing a member's LOSAP earned points, and
+  // determine the credited points (determining the lesser of the earned versus maximum/cap allowed).
   function LOSAP_calculation($arg_membernbr, $arg_LOSAP_fires, $arg_LOSAP_fires_total, $arg_LOSAP_drills, $arg_LOSAP_meetings, $arg_LOSAP_training, $arg_LOSAP_misc){
     // For fire percentage, call "fct_alarm_percent_floor" function.
     $this->LOSAP_fire_floor = $this->fct_alarm_percent_floor($arg_LOSAP_fires, $arg_LOSAP_fires_total);
