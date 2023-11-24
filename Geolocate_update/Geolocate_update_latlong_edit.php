@@ -215,6 +215,11 @@ class cls_geolocate_update_latlong_edit{
     ';
   }
 
+
+  function fct_write_json_file(){
+
+  }
+
 }
 
 //-----------------------------------------------------------------------
@@ -249,13 +254,13 @@ function fct_mainline_debug(){
 }
 
 
-function fct_mainline_update_JSON(){
-  //fct_mainline_debug();
-  fct_geolocate_edit();
+function fct_mainline_update_JSON($arg_wrk_class2){
+  fct_mainline_debug();
+  fct_geolocate_edit($arg_wrk_class2);
 }
 
 
-function fct_geolocate_edit(){
+function fct_geolocate_edit($arg_wrk_class2){
   // Build the array structures.
   $wrk_array_innerdata = array();
   if(isset($_POST['checkbox'])){
@@ -269,9 +274,8 @@ function fct_geolocate_edit(){
   if(count($wrk_array_innerdata) > 0){
     $wrk_array_for_JSON =  array("whitelist_LATLONG"=>$wrk_array_innerdata, "whitelist_verbose"=>false);
     $wrk_json_encode = json_encode($wrk_array_for_JSON, JSON_PRETTY_PRINT);
-    // First, clear out the file using a ''. Then write the entire file.
-    file_put_contents($this->latlong2_file_put_contents, '');
-    file_put_contents($this->latlong2_file_put_contents, $wrk_json_encode);
+
+    file_put_contents($arg_wrk_class2, $wrk_json_encode);
   }
 }
 
@@ -284,7 +288,8 @@ $wrk_class2 = new cls_geolocate_update_latlong_edit;
 
 // Did the user click on the submit button?
 if($_SERVER["REQUEST_METHOD"] == 'POST'){
-  fct_mainline_update_JSON();
+  //fct_mainline_update_JSON($wrk_class2->latlong2_file_put_contents);
+  fct_geolocate_edit($wrk_class2->latlong2_file_put_contents);  // Contains just the JSON file name.
 }
 
 $wrk_class2->fct_html_header();
