@@ -48,7 +48,7 @@ The earned column is the number of points that the individual actually attended.
 | lieutenant | 25 | (no cap) | 25 |
 | meetings | 12 | 12 | 12 |
 | training | 100 | 50 | 50 |
-| miscellaneous | 72 | 40 | 40 |
-| totals | 319.5 | 227 | 227 |
+| miscellaneous | 30 | 40 | 30 |
+| totals | 277.5 | 202 | 217 |
 
-The sum of points in the "allowed" column is 227. If the minimum number of points to achieve LOSAP is 150, this person satisfied the commitment to receive their annual allowance.
+The sum of points in the "allowed" column is 217. If the minimum number of points to achieve LOSAP is 150, this person satisfied the commitment to receive their annual allowance.
