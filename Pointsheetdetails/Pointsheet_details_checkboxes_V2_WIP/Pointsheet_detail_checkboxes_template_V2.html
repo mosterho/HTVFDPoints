@@ -20,43 +20,45 @@
                     <h2>Enter line numbers via checkbox</h2>
                     <h4>Pointsheet: 12345 - Some fire at some address</h4>
                     <hr class="my-4">
-                    <div id="html_body_active">
-                        <h5>Active Members</h5>
-                        <div class="form-check">
-                            <input type="checkbox" class="form-check-input" id="formInputSelectall">
-                            <label class="form-check-label" for="formInputSelectall">Select all Active members</label>
-                        </div>
-                        <p></p>
-                        <div id="active_members">
-                            <div class="row row-cols-md-5">
-                                <div class="col">
-                                    <div class="form-check">
-                                        <input type="checkbox" class="form-check-input" id="formInput11">
-                                        <label class="form-check-label" for="formInput11">11-Giannone, J.</label>
-                                    </div>
-                                </div>
-                                <div class="col">
-                                    <div class="form-check">
-                                        <input type="checkbox" class="form-check-input" id="formInput12">
-                                        <label class="form-check-label" for="formInput12">12-Lacatena, F.</label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                </div>
+                <div id="html_body_active">
+                    <h5>Active Members</h5>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="formInputSelectall" onclick="">
+                        <label class="form-check-label" for="formInputSelectall">Select all Active members</label>
                     </div>
-                    <hr class="my-4">
-                    <h5>All Other Members (Medical Leave, etc.)</h5>
-                    <div id="nonactive_members">
-                        <div class="row">
+                    <p></p>
+                    <div id="active_members">
+                        <div class="row row-cols-md-5">
                             <div class="col">
                                 <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" id="formInput26">
-                                    <label class="form-check-label" for="formInput26">26-Osterhoudt, M. (med)</label>
+                                    <input type="checkbox" class="form-check-input" id="formInput11">
+                                    <label class="form-check-label" for="formInput11">11-Giannone, J.</label>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" id="formInput12">
+                                    <label class="form-check-label" for="formInput12">12-Lacatena, F.</label>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <hr class="my-4">
+                </div>
+                <div id="html_body_nonactive_members">
+                    <h5>All Other Members (Medical Leave, etc.)</h5>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="formInput26">
+                                <label class="form-check-label" for="formInput26">26-Osterhoudt, M. (med)</label>
+                            </div>
+                        </div>
+                    </div>
+                    <hr class="my-4">
+                </div>
+                <div id="html_button_group">
                     <div class="btn-group" role="group" aria-label="Basic Button Group">
                         <button type="submit" class="btn btn-secondary">Submit</button>
                         <button type="reset" class="btn btn-secondary">Reset</button>
