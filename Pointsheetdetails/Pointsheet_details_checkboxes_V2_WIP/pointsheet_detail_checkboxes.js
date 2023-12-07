@@ -31,5 +31,5 @@ function fct_js_deselect_active_members(){
 // Close form.
 function fct_js_closeform(){
   window.close();
-  console.log('Close button hit...')
+  //console.log('Close button hit...')
 }
