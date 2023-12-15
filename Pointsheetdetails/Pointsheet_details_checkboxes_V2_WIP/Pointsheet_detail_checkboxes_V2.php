@@ -1,5 +1,17 @@
 <?php
 
+// Point Sheet Detail entry via text box and check boxes.
+//
+// Original coding by Marty Osterhoudt for Hardyston Twp. (NJ) Volunteer Fire Department
+// as part of its Point Sheet Entry system.
+//
+// The HTML for this form was originally designed using Pinegrow and utilized Bootstrap 5 for formatting and CSS.
+// The PHP code here utilizes "echo" functions and wraps around the HTML and CSS created from Pinegrow.
+//
+// The Point Sheet system is written using Scriptcase. This program is called from the main Point Sheet Entry program
+// that was created using Scriptcase.
+//
+
 class cls_pointsheet_detail_checkboxes{
   public $pointsheetnbr;
   public $call_descr = '*** Pointsheet cookie not set, or invalid pointsheet number!';
@@ -16,7 +28,7 @@ class cls_pointsheet_detail_checkboxes{
 
   function __construct(){
     // The Point sheet number is obtained from cookie value. This was set in main Pointsheet Entry screens.
-    // Scriptcase has a convulated method of passing arguments to external functions using the sc_redir function..
+    // Scriptcase has a convulated method of passing arguments to external applications using the sc_redir function.
     if(!isset($_COOKIE[$this->cookie_pointsheetnbr])) {
       echo "Cookie named '" . $this->cookie_pointsheetnbr . "' is not set!";
       die("Cookie named '" . $this->cookie_pointsheetnbr . "' is not set!");
@@ -24,7 +36,7 @@ class cls_pointsheet_detail_checkboxes{
       $this->pointsheetnbr =  $_COOKIE[$this->cookie_pointsheetnbr];
     }
 
-    // Obtain database connection parameters.
+    // Obtain database connection parameters, and make a DB connection.
     $dbfileinfo = '/home/ESIS/dataonly/htvfd_init/db.json';
     if(!file_exists($dbfileinfo)){
       die('File with connection info '.$dbfileinfo.' not found');
@@ -47,7 +59,7 @@ class cls_pointsheet_detail_checkboxes{
       $this->ending_date = $PSH['Ending_date'];
     }
 
-    // fct_load_PSD is called here (to initially load the display) and after a database update.
+    // fct_load_PSD is called here (to initially load the display) and after a database update (see mainline code section).
     $this->fct_load_PSD();
 
     // NOTE: Active and Inactive members are based on the starting date of the pointsheet header, NOT today's date.
@@ -63,6 +75,7 @@ class cls_pointsheet_detail_checkboxes{
 
 
   function __destruct(){
+    // Close the DB connection.
     $this->connection->close();
   }
 
@@ -79,7 +92,7 @@ class cls_pointsheet_detail_checkboxes{
     $result = $this->connection->query($arg_sql);
     if(!isset($result)){
       echo '<p>';
-      die($arg_sql.' sql statement did not reult in an equivalent variable');
+      die($arg_sql.' sql statement is not in the proper format or did not produce a correct/workable dataset.');
     }
     else {
       return $result;
@@ -94,10 +107,10 @@ class cls_pointsheet_detail_checkboxes{
       if ($arg_dataset->num_rows > 0) {
         while($row = $arg_dataset->fetch_assoc()) {
           // after retrieving the roster row, determine if a pointsheet detail exists.
-          // The returned value will be either true or false.
+          // The returned value will be either true or false and used for the line number checkbox.
           $psd_found = $this->fct_read_psdetail_fromDS($row['Line_number']);
           $name = $row['last_name'].', '.$row['first_name'];
-          // If the inactive dataset was passed in, tack on the code at the end of the members name.
+          // If the inactive dataset was passed in, tack on the status code at the end of the members name.
           if($arg_activeinactive == 'inactive'){
             $name .= ' ('.$row['In_Service_Status'].')';
           }
@@ -143,6 +156,7 @@ class cls_pointsheet_detail_checkboxes{
     <!-- Bootstrap core CSS -->
     <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom styles for this template -->
+    <!-- This template was modified to include a 3 column newspaper style -->
     <link href="grid.css" rel="stylesheet">
     </head>
     <body class="py-4">
@@ -158,8 +172,9 @@ class cls_pointsheet_detail_checkboxes{
     </div>
     <div id="html_members_single_linenumber">
     Enter a member line number and hit `tab` key:&nbsp;
-    <input type="number" name = "forminput_individual" class="form_check-input" id="forminput_individual" autofocus onkeydown="fct_js_keyevent(event)" >
-    <input type="text" size="50" name = "form_line_number_confirmation" id = "form_line_number_confirmation" onfocus="fct_js_refocus()">
+    <input type="number" name="forminput_individual" class="form_check-input" id="forminput_individual" autofocus onkeydown="fct_js_keyevent(event)" >
+    <!--  The following text box will display the line number entered after the tab key is pressed. It also sets the focus back to the entry textbox. -->
+    <input type="text" size="50" name="form_line_number_confirmation" id="form_line_number_confirmation" onfocus="fct_js_refocus()">
     <hr class="my-4">
     </div>
     <div id="html_body_active">
@@ -195,7 +210,7 @@ class cls_pointsheet_detail_checkboxes{
   function fct_html_member($arg_linenbr, $arg_member_name, $arg_activeinactive, $arg_psd_found){
     // $arg_psd_found determines if a pointsheet detail was found for a member.
     if($arg_psd_found == true){
-      $wrk_checkbox = 'checked';  //HTML
+      $wrk_checkbox = 'checked';  // HTML line number checkbox will be selected/checked.
     }
     else{
       $wrk_checkbox = '';
@@ -203,7 +218,7 @@ class cls_pointsheet_detail_checkboxes{
     echo '
     <div class="col">
     <div class="form-check">
-    <input type="checkbox" name="'.$arg_activeinactive.'membercheckbox-'.$arg_linenbr.'" class="form-check-input" id="formInput'.$arg_linenbr.'" '.$wrk_checkbox.' onclick="fct_js_deselect_active_members()">
+    <input type="checkbox" name="'.$arg_activeinactive.'membercheckbox-'.$arg_linenbr.'" class="form-check-input" id="formInput'.$arg_linenbr.'" '.$wrk_checkbox.' onclick="fct_js_checkbox_members()">
     <label class="form-check-label" id="formcheckboxLabel'.$arg_linenbr.'" for="formInput'.$arg_linenbr.'">'.$arg_linenbr.' - '.$arg_member_name.'</label>
     </div>
     </div>
@@ -237,7 +252,7 @@ class cls_pointsheet_detail_checkboxes{
 
   // Update Point Sheet detail file based on checkboxes.
   function fct_update_dbdata($arg_dataset){
-    // Becasue there are two roster datasets, determine which one to use
+    // Since there are two roster datasets, determine which one to use
     // based on the argument passed in.
     if($arg_dataset == 'active'){
       $wrk_dataset = $this->roster_active;
@@ -256,16 +271,18 @@ class cls_pointsheet_detail_checkboxes{
         $checkbox_on = false;
       }
 
-      // Within each roster row just read, now determine if a pointsheetdetail row exists.
-      // This is also used by the truth table below.
+      // For each roster row just read, determine if a pointsheet detail row exists.
+      // This is used by the truth table below.
       $wrk_found_PSDdetail = $this->fct_read_psdetail_fromDS($roster_row['Line_number']);
 
+      // -----------------------------------------------------------------------------------------------------------------------------------
       // Create a truth table (of sorts) to determine database operations.
       // This compares whether the member checkbox is selected versus whether a pointsheet detail row exists for the member.
       //  checkbox selected = false   row exists = false   action = do nothing.
       //  checkbox selected = false   row exists = true    action = delete row.
       //  checkbox selected = true    row exists = false   action = insert row.
       //  checkbox selected = true    row exists = true    action = do nothing.
+      // -----------------------------------------------------------------------------------------------------------------------------------
       if($checkbox_on == false and $wrk_found_PSDdetail == true){
         $sql = 'DELETE FROM `Pointsheetdtl` WHERE (ID_Pointsheetdtl = '.$this->pointsheetnbr.' and Line_nbr = '.$roster_row['Line_number'].');';
         $this->fct_sql_query($sql);
@@ -276,7 +293,7 @@ class cls_pointsheet_detail_checkboxes{
       }
 
     }
-    // *** reposition the row pointers so the fct_read_members function will work.
+    // *** reposition the row pointers for each dataset.
     mysqli_data_seek($this->roster_active,0);
     mysqli_data_seek($this->roster_inactive,0);
     mysqli_data_seek($this->db_pointsheetdetail,0);
@@ -292,7 +309,7 @@ class cls_pointsheet_detail_checkboxes{
 
 $wrk_class = new cls_pointsheet_detail_checkboxes();
 
-// Close button is handled in Javascript "pointsheet_detail_checkboxes.js".
+// NOTE: The close button is handled in Javascript "pointsheet_detail_checkboxes.js".
 if($_SERVER["REQUEST_METHOD"] == 'POST' and isset($_POST["button_submit"])){
   $wrk_class->fct_update_dbdata('active');
   $wrk_class->fct_update_dbdata('inactive');
