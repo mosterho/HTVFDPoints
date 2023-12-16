@@ -18,12 +18,14 @@ class cls_pointsheet_detail_checkboxes{
   public $pointyear;
   public $starting_date;
   public $ending_date;
+  public $department_points;
   public $db_info;
   public $connection;
   public $roster_active;
   public $roster_inactive;
   public $db_pointsheet;
   public $db_pointsheetdetail;
+  public $db_autoadd_members;
   public $cookie_pointsheetnbr = 'pointsheet_number';
 
   function __construct(){
@@ -49,7 +51,8 @@ class cls_pointsheet_detail_checkboxes{
     }
 
     // Obtain Point Sheet header information based on cookie data.
-    $sql = 'SELECT * FROM Pointsheet where ID_Pointsheet = '.$this->pointsheetnbr.';';
+    //$sql = 'SELECT * FROM Pointsheet where ID_Pointsheet = '.$this->pointsheetnbr.';';
+    $sql = 'SELECT * FROM Pointsheet PS join TBL_master_pointcodes_V2 PC on PS.Sheet_ID = PC.TBL_master_sheetcode_ID where ID_Pointsheet = '.$this->pointsheetnbr.';';
     $this->db_pointsheet = $this->fct_sql_query($sql);
     // Using foreach, but there should be one row.
     foreach($this->db_pointsheet as $PSH){
@@ -57,10 +60,8 @@ class cls_pointsheet_detail_checkboxes{
       $this->call_descr = $PSH['Comments'];
       $this->starting_date = $PSH['Starting_date'];
       $this->ending_date = $PSH['Ending_date'];
+      $this->department_points = $PSH['TBL_master_clothingallowance(Y,N)'];
     }
-
-    // fct_load_PSD is called here (to initially load the display) and after a database update (see mainline code section).
-    $this->fct_load_PSD();
 
     // NOTE: Active and Inactive members are based on the starting date of the pointsheet header, NOT today's date.
     // Retrieve Active members from Roster table into dataset.
@@ -71,6 +72,8 @@ class cls_pointsheet_detail_checkboxes{
     $sql = 'SELECT * FROM Roster R join Roster_In_Service RIS on R.member_nbr = RIS.Member_nbr where In_Service_Status not in ("A", "I", "R") and "'.$this->starting_date.'" between Date_In and Date_Out order by R.Line_number;';
     $this->roster_inactive = $this->fct_sql_query($sql);
 
+    // The following is called here (to initially load the display) and after a database update (see mainline code section).
+    $this->fct_load_PSD();
   }
 
 
@@ -84,6 +87,42 @@ class cls_pointsheet_detail_checkboxes{
   function fct_load_PSD(){
     $sql = 'SELECT * FROM Pointsheetdtl where ID_Pointsheetdtl = '.$this->pointsheetnbr.';';
     $this->db_pointsheetdetail = $this->fct_sql_query($sql);
+    // Once the pointsheet detail is read, ensure that certain members are automatically added to department-level point sheets.
+    // This is mainly for members who are on military leave.
+    if($this->department_points == true){
+      $this->fct_validate_autoadd_PSdetails();
+      // Reload the dataset, regardless of whether any new rows were added to the point sheet details table.
+      $sql = 'SELECT * FROM Pointsheetdtl where ID_Pointsheetdtl = '.$this->pointsheetnbr.';';
+      $this->db_pointsheetdetail = $this->fct_sql_query($sql);
+    }
+  }
+
+
+  // Check for any members who should be autoadded to a point sheet if it is department points.
+  function fct_validate_autoadd_PSdetails(){
+    // Read the Roster to determine which members should be autoadded based on in-serivce dates and the autoadd flag.
+    $sql = 'SELECT * FROM view_Roster_RosterinService RIS JOIN TBL_Validation TBLV ON RIS.In_Service_Status = TBLV.idTBL_Validation WHERE "'.$this->starting_date.'" BETWEEN Date_In AND Date_Out AND TBLV.TBL_Validation_allow_companypoint_autoadd = 1;';
+    $result = $this->fct_sql_query($sql);
+    // Read each row, add a point sheet detail as needed.
+    if($result->num_rows > 0){
+      foreach($result as $row){
+        // reposition the pointsheet detail dataset.
+        mysqli_data_seek($this->db_pointsheetdetail,0);
+        // The read_flag will be set to true if a line number is already in the point sheet detail table.
+        $read_flag = false;
+        foreach($this->db_pointsheetdetail as $PSD_row){
+          if($PSD_row['Line_nbr'] == $row['RIS_Line_Number']){
+            $read_flag = true;  // The member is already in the point sheet detail table.
+            break;
+          }
+        }
+        // If a line number is NOT in the point sheet detail table, add it.
+        if($read_flag == false){
+          $sql = 'INSERT INTO `Pointsheetdtl` (`ID_Pointsheetdtl`, `Line_nbr`, `Member_nbr`, `dtl_Point_year`, `Pointsheetdtl_reconciled`) VALUES ('.$this->pointsheetnbr.', '.$row["Line_number"].', '.$row["member_nbr"].', '.$this->pointyear.', 1);';
+          $this->fct_sql_query($sql);
+        }
+      }
+    }
   }
 
 
@@ -119,7 +158,7 @@ class cls_pointsheet_detail_checkboxes{
         }
       }
     }
-    catch(exception  $error){
+    catch(Exception  $error){
       echo 'Error within try/catch: '.$error;
     }
   }
@@ -291,7 +330,6 @@ class cls_pointsheet_detail_checkboxes{
         $sql = 'INSERT INTO `Pointsheetdtl` (`ID_Pointsheetdtl`, `Line_nbr`, `Member_nbr`, `dtl_Point_year`, `Pointsheetdtl_reconciled`) VALUES ('.$this->pointsheetnbr.', '.$roster_row["Line_number"].', '.$roster_row["member_nbr"].', '.$this->pointyear.', 1);';
         $this->fct_sql_query($sql);
       }
-
     }
     // *** reposition the row pointers for each dataset.
     mysqli_data_seek($this->roster_active,0);
