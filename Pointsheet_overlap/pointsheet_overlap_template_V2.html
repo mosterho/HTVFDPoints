@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="This page will display any point sheets where the starting and ending dates/times overlap. This is to help determine if a member on department business should be added to any department-level point sheets.">
+        <meta name="author" content="Marty Osterhoudt for Hardyston (NJ) Fire Department">
+        <title>Point Sheet Overlap</title>
+        <!-- Bootstrap core CSS -->
+        <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <!-- Custom styles for this template -->
+        <link href="style.css" rel="stylesheet">
+    </head>
+    <body>
+        <div class="container">
+            <!-- Bootstrap core JavaScript
+    ================================================== -->
+            <!-- Placed at the end of the document so the pages load faster -->
+            <form>
+                <h2>Point Sheet Overlap</h2>
+                <h3>Determine if any point sheets overlap and member(s) should receive credit</h3>
+                <div class="border-start border-top border-end border-bottom">
+                    <table class="table ">
+                        <thead>
+                            <tr class="table-info table-row">
+                                <th>Point Sheet#</th>
+                                <th>Starting Date</th>
+                                <th>Ending Date</th>
+                                <th>Comments</th>
+                            </tr>
+                        </thead>
+                        <tr class="table-row">
+                            <td>12345</td>
+                            <td>10/13/2023 10:00:00</td>
+                            <td>10/13/2023 12:00:00</td>
+                            <td>Someone did some miscellaneous work</td>
+                        </tr>
+                        <tr class="table-row">
+                            <td>12347</td>
+                            <td>10/13/2023 11:15:00</td>
+                            <td>10/13/2023 11:17:00</td>
+                            <td>There was a fire... a big fire... a REALLY BIG fire... OK someone poured a bottle of water on it.</td>
+                        </tr>
+                    </table>
+                    <table class="table">
+                        <tr class="table-light">
+                            <th>Combined Line Numbers on pointsheets</th>
+                            <th>11</th>
+                            <th>12</th>
+                            <th>17</th>
+                            <th>22</th>
+                            <th>23</th>
+                            <th>24</th>
+                            <th>27</th>
+                            <th>31</th>
+                            <th>50</th>
+                        </tr>
+                        <tr class="table-light">
+                            <th>Line Numbers on pointsheet 12345</th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th>27</th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                        <tr class="table-light">
+                            <th>Line Numbers on pointsheet 12347</th>
+                            <th>11</th>
+                            <th>12</th>
+                            <th>17</th>
+                            <th>22</th>
+                            <th>23</th>
+                            <th>24</th>
+                            <th></th>
+                            <th>31</th>
+                            <th>50</th>
+                        </tr>
+                    </table>
+                </div>
+            </form>
+            <script src="assets/js/popper.min.js"></script>
+            <script src="bootstrap/js/bootstrap.min.js"></script>
+        </div>
+    </body>
+</html>

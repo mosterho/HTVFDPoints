@@ -173,7 +173,7 @@ class cls_pointsheet_detail_checkboxes{
       // If a PS Detail row is found that matches a roster line number, set the flag and break out of foreach loop.
       if($PSD_row['Line_nbr'] == $arg_linenbr){
         return true;
-        break;
+        //break;
       }
     }
     return false;

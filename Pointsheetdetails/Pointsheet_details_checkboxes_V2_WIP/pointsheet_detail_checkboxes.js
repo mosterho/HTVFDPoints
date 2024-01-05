@@ -11,7 +11,7 @@
 // for="formInput11'  to match the checkbox ID.
 
 
-// IF the "Select All" checkbox is selected, check all active members' checkboxes,
+// IF the "Select All" checkbox is selected, check all ACTIVE members' checkboxes,
 // but ignore the "all others" checkboxes (can be selected manually if needed).
 function fct_js_select_active_members(){
   // Check if "select all" checkbox is selected.

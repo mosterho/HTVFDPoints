@@ -3,6 +3,9 @@
 // Just remove the <?php and ?> lines.
 
 <?php
+
+// Copy from here down to just before the PHP end
+
 [gbl_path] = '../home_esis_link';
 [gbl_SAC_calendar_jsondecoded] = '';
 
@@ -51,4 +54,4 @@ catch(Exception $e){
 // end of customized app_Login script
 // If the geolocation check is valid, continue with normal script
 
- ?>
+?>
