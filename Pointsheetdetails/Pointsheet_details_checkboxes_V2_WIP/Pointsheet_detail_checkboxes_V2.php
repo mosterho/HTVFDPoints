@@ -118,7 +118,7 @@ class cls_pointsheet_detail_checkboxes{
         }
         // If a line number is NOT in the point sheet detail table, add it.
         if($read_flag == false){
-          $sql = 'INSERT INTO `Pointsheetdtl` (`ID_Pointsheetdtl`, `Line_nbr`, `Member_nbr`, `dtl_Point_year`, `Pointsheetdtl_reconciled`) VALUES ('.$this->pointsheetnbr.', '.$row["Line_number"].', '.$row["member_nbr"].', '.$this->pointyear.', 1);';
+          $sql = 'INSERT INTO `Pointsheetdtl` (`ID_Pointsheetdtl`, `Line_nbr`, `Member_nbr`, `dtl_Point_year`, `Pointsheetdtl_reconciled`) VALUES ('.$this->pointsheetnbr.', '.$row["Line_number"].', '.$row["member_nbr"].', '.$this->pointyear.', 0);';
           $this->fct_sql_query($sql);
         }
       }
@@ -327,7 +327,7 @@ class cls_pointsheet_detail_checkboxes{
         $this->fct_sql_query($sql);
       }
       elseif($checkbox_on == true and $wrk_found_PSDdetail == false){
-        $sql = 'INSERT INTO `Pointsheetdtl` (`ID_Pointsheetdtl`, `Line_nbr`, `Member_nbr`, `dtl_Point_year`, `Pointsheetdtl_reconciled`) VALUES ('.$this->pointsheetnbr.', '.$roster_row["Line_number"].', '.$roster_row["member_nbr"].', '.$this->pointyear.', 1);';
+        $sql = 'INSERT INTO `Pointsheetdtl` (`ID_Pointsheetdtl`, `Line_nbr`, `Member_nbr`, `dtl_Point_year`, `Pointsheetdtl_reconciled`) VALUES ('.$this->pointsheetnbr.', '.$roster_row["Line_number"].', '.$roster_row["member_nbr"].', '.$this->pointyear.', 0);';
         $this->fct_sql_query($sql);
       }
     }

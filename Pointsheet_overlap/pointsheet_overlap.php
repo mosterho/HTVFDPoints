@@ -13,7 +13,6 @@ class cls_display_ps_overlap {
     include $include;
     $this->wrk_class_PSO = new cls_pointsheet_overlap();
     $this->wrk_class_PSO->fct_compare_PS();
-    //var_dump($this->wrk_class_PSO);
   }
 
 
@@ -71,6 +70,16 @@ class cls_display_ps_overlap {
       </tr>
       </thead>
       <tbody>';
+
+      // for debugging only
+      /*
+      echo '<br>';
+      var_dump($value);
+      echo '<br>';
+      $temp_json = json_encode($value);
+      var_dump($temp_json);
+      echo '<br>';
+      */
 
       // Loop through pointsheet header info, display each point sheet as a table row.
       foreach($value as $rowkey=>$rowvalue){
@@ -138,6 +147,9 @@ class cls_display_ps_overlap {
 //   mainline
 //-----------------------------------------------------------------------
 
+// Instantiaite the report's class. Within the __construct, this will instantiate the
+// "pointsheet_overlap_search_V2.php" class, which in turn will read the point sheet tables and
+// load arrays to be read by this program to produce the overlap report.
 $wrk_thisclass = new cls_display_ps_overlap();
 $wrk_thisclass->fct_display_header();
 $wrk_thisclass->fct_read_PS();
