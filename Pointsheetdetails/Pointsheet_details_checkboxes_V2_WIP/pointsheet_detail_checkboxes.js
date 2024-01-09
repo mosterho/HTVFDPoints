@@ -20,6 +20,7 @@ function fct_js_select_active_members(){
     let var_active_members_entries = document.getElementsByClassName("form-check-input").length;
     // Loop through all members' checkboxes,then determine the "active" members to select.
     // Remember that the index is the position within the checkboxes, not a member's line number.
+    // Also, the "select all" checkbox is class form-check-input, that's why i is set to 1 and not 0.
     for (let i = 1; i < var_active_members_entries; i++){
       let wrk_elements = document.getElementsByClassName("form-check-input")[i];
       // if the class name begins with "active" set the checkbox (skip the inactive members).
