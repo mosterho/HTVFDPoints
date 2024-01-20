@@ -35,12 +35,21 @@ try{
 		echo 'In app_Login, cannot open geolocate_API.PHP';
 	}
 
-	// Retrieve type of point year. HTVFD uses December 1 to November 30.
+
+    // include pointyear validation code, instantiate class, and retrieve
+    // and update the cookie and, if needed, the options JSON file.
+    $filetoread = [gbl_path].'./HTVFDPoints/Pointyear/pointyear_validation.php';
+    include $filetoread;
+    $wrk_cls_pointyear_validation = new cls_calendar_validation();
+
+
+	// Retrieve type and value of point year. HTVFD uses December 1 to November 30.
 	$filetoread = [gbl_path].'/dataonly/htvfd_init/options.json';
 	if(file_exists($filetoread)){
 		$wrk_options = file_get_contents($filetoread);
 		$wrk1_options_jsondecoded = json_decode($wrk_options);
 		[gbl_SAC_calendar_jsondecoded] = $wrk1_options_jsondecoded->{"calendar"};
+
 	}
 	else{
 		echo 'In app_Login, calendar file not found';

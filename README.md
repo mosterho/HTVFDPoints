@@ -30,7 +30,7 @@ The custom code is kept outside of the wwwroot folder structure on the applicati
 /home/site/wwwroot.
 This folder contains the Scriptcase folders that have each application's HTML, Javascript, and PHP.
 
-![Screen cap of folder structure](../Supporting_documents/homesitewwwroot.jpg)
+![Screen cap of folder structure](/Supporting_documents/homesitewwwroot.JPG)
 
 The way to access the custom web pages and code in Scriptcase is through a symbolic link. The symbolic link is /home/site/wwwroot/home_esis_link (the link is visible in the screen cap above). The link points to /home/ESIS/.
 

@@ -4,13 +4,16 @@
 The NJ State Firemen's Association was created in 1846 (https://njsfa.com/historical_record.aspx  and  https://njsfa.com/history_of_association.aspx). The purpose of the association is to permit financial relief for firefighters injured or killed in the line of duty. Money is collected in the form of taxes from insurance companies that do business in NJ. There are other benefits as well (retire in one the NJ Firemen's assisted living homes, etc.). The benefits are available to an individual if he/she has maintained a percentage of work performed or attained their exemption. Exemption is when a firefighter has attended at least 50% of fire department calls and drills for 84 months (seven years). Although each member's percentage is calculated for each month, the data are submitted in January to the state association by each local relief association.
 
 The calculations for maintaining the benefits are as follows:
+
 * Determine the sum of all fires attended by the firefighter;
-* Determine the sum of all drills attended by the firefighter (maximum of two per month);
+* Determine the sum of all drills attended by the firefighter; 
+  * (Hardyston has weekly drills, but uses a maximum of two per month for alculations)
 * Determine the total number of fires and drills for the entire company.
+
 
 For example:
 1. if there were 60 fires/emergencies for one month in a fire company's response area, and
-2. there were four drills in the month, and
+2. there were four drills in the month, and;
 3. a firefighter attended 45 fires and all four company drills during the month;
 
 Calculating percentage to obtain/maintain exemption is:

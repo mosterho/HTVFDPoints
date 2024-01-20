@@ -100,10 +100,14 @@ class cls_pointsheet_overlap {
     $work_psnumber_break = false;
     $work_is_previousrow_loaded = false;
     $work_array_keep_temp = array();
+    
     // Using foreach, read each row in the dataset.
+    // The idea is to keep the previous row's data to compare with the current row's data.
+    // i.e., to mimic a look-ahead of the two rows.
+
     // The following pseudo-code determines how PS header and detail are checked and kept if there are overlaps:
     // 1. read row from pointsheet dataset;
-    //    if this is the first row read, initially load the "keep" variables (used to compare for the next read);
+    //    if this is the first row read, initially load the "keep" variables (used to compare the next read);
     // 2. else if the "keep" previous row ending date is greater than the current row starting date, possible overlap! Add to arrays with PS header and detail data;
     // 3. else (to line #2, but now previous row's ending date <= previous starting date)
     //    if there is data in "keep" variables (i.e., two point sheets overlap), begin audit of PS headers and line numbers. Add array to all_data array if audit passes.
@@ -118,16 +122,18 @@ class cls_pointsheet_overlap {
         $work_psnumber_break = true;
         $this->fct_psnumber_break($PSH);
       }
-      // 2. If the hold ending date of the prevous row is greater than the current row's starting date, print basic info.
+      // 2. If the hold ending date of the prevous row is greater than the current row's starting date, save basic info in arrays.
       else{
         if($this->wrk_ending_date > $PSH['Starting_date']){
           // Found potential overlap. load previous row's header and Line numbers into a hold array.
+          // Perform this once for each "batch" of possible overlapping point sheets.
+          // Note PSH = Point Sheet Header info... PSD = Point Sheet Details (e.g., member's line numbers)
           if(!$work_is_previousrow_loaded){
-            $work_array_PSH = array("Pointsheet_number"=>$this->wrk_pointsheet_nbr, "starting_date"=>$this->wrk_starting_date, "ending_date"=>$this->wrk_ending_date, "comments"=>$this->wrk_comments, "dept_flag"=>$this->wrk_dept_points);
-            $work_array_PSD = $this->fct_load_PS_detail($this->wrk_pointsheet_nbr);  // function returns an array of line numbers.
-            $work_array_PSH["line_numbers"] = $work_array_PSD;  // Add PSD array onto PSH header (so an array within an array)
-            array_push($work_array_keep_temp, $work_array_PSH);  // Now push PSH/PSD array onto the temp "overlap" array.
             $work_is_previousrow_loaded = true;
+            $work_array_PSH = array("Pointsheet_number"=>$this->wrk_pointsheet_nbr, "starting_date"=>$this->wrk_starting_date, "ending_date"=>$this->wrk_ending_date, "comments"=>$this->wrk_comments, "dept_flag"=>$this->wrk_dept_points);
+            $work_array_PSD = $this->fct_load_PS_detail($this->wrk_pointsheet_nbr);  // function returns an array of member's line numbers.
+            $work_array_PSH["line_numbers"] = $work_array_PSD;  // Add PSD array onto PSH header (an array within an array)
+            array_push($work_array_keep_temp, $work_array_PSH);  // Now push PSH/PSD array onto the temp "overlap" array.
           }
           // load the current row's header and Line numbers into a hold array.
           $work_array_PSH = array("Pointsheet_number"=>$PSH['ID_Pointsheet'], "starting_date"=>$PSH['Starting_date'], "ending_date"=>$PSH['Ending_date'], "comments"=>$PSH['Comments'], "dept_flag"=>$PSH['TBL_master_clothingallowance(Y,N)']);
@@ -155,7 +161,7 @@ class cls_pointsheet_overlap {
             $this->array_merged = array_unique($this->array_merged);
             sort($this->array_merged);  // Note: "sort" function does the sort in-place to the same variable.
             $work_array_keep_temp["merged_linenumbers"] = $this->array_merged;  // add 'merged_linenumbers' key and data.
-            array_push($this->array_alldata, $work_array_keep_temp);
+            array_push($this->array_alldata, $work_array_keep_temp);  // Add merged line numbers to the array containing multiple point sheet arrays. 
           }
 
           // 4. Reset work variables.
@@ -185,5 +191,14 @@ class cls_pointsheet_overlap {
   }
 
 }
+// End of class definition
+
+//-----------------------------------------------------------------------
+//   mainline
+//-----------------------------------------------------------------------
+
+// There is no mainline for this program. Instantiaite the cls_pointsheet_overlap class 
+// in the calling program.
+
 
 ?>
