@@ -60,7 +60,7 @@ class cls_calendar_validation
     $calendar_options['calendar'] = $this->calendar_setting;
     $calendar_options['start_month'] =  $this->calendar_start_month;
     $calendar_options['pointsystem_defaultyear'] = $this->point_year;
-    $myfile = json_encode($calendar_options, JSON_PRETTY_PRINT);  // true creates an associative array.
+    $myfile = json_encode($calendar_options, JSON_PRETTY_PRINT);  
     file_put_contents($this->dbfileinfo, $myfile);
   }
 

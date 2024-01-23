@@ -7,7 +7,7 @@ The calculations for maintaining the benefits are as follows:
 
 * Determine the sum of all fires attended by the firefighter;
 * Determine the sum of all drills attended by the firefighter; 
-  * (Hardyston has weekly drills, but uses a maximum of two per month for alculations)
+  * (Hardyston has weekly drills, but uses a maximum of two per month for calculations)
 * Determine the total number of fires and drills for the entire company.
 
 
@@ -24,9 +24,9 @@ Calculating percentage to obtain/maintain exemption is:
   * 47 divided by 62 * 100% = 62.7%.
 
 ## LOSAP (https://www.nj.gov/dca/divisions/dlgs/programs/losap.html)
-LOSAP is a program where a firefighter/EMT can receive income through a savings plan. The accounts are similar to a 401k and have similar limitations (e.g., five years vesting, cannot withdraw funds except for financial hardship, etc.). LOSAP was setup at the sate level by NJ statute. In order to make this available in each municipality, it must be created by ordinance. The ordinance specifies the members' receiving funds based on attendance at various fire/EMS functions. All monies are added to the accounts annually and are supplied by the municipality only (no funds are deposited by the firefighter).
+LOSAP is a program where a firefighter/EMT can receive income through a savings plan. The accounts are similar to a 401k and have similar limitations (e.g., five years vesting, cannot withdraw funds except for financial hardship, etc.). LOSAP was setup at the state level by NJ statute. In order to make this available in each municipality, it must be created by ordinance. The ordinance specifies the members receiving funds based on attendance at various fire/EMS functions. All monies are added to the accounts annually and are supplied by the municipality only (no funds are deposited by the firefighter).
 
-The calculations for attendance are usually based on attaining a certain number of points. Each category has a set number of points and each individual category usually has a cap. If the sum of all category points adds up to a minimum number (e.g., 150 points) the person is eligible to receive LOSAP funds for that year (i.e., "made LOSAP"). The categories for calculating the annual LOSAP deposit can include:
+The calculations for attendance are usually based on attaining a certain number of points. Each category has a set number of points and each individual category usually has a cap. If the sum of all category points adds up to a minimum number (e.g., 150 points) the person is eligible to receive LOSAP funds for that year (i.e., the firefighter/EMT "made LOSAP"). The categories for calculating the annual LOSAP deposit can include:
 * fires
 * drills
 * line/social officer

@@ -7,7 +7,7 @@
 // 1. two or more arrays that contains partial point sheet header information and an array of line numbers.
 // 2. A summary array $array_merged ["merged_linenumbers"] that combines all line numbers from the overlapping point sheets.
 
-// It will be helpful to use "soft wrap" while using any program to display this code.
+// It will be helpful to use "soft wrap" while using any editor to display this code.
 // The example/section of the array $array_alldata that contains two overlapping point sheets will look like the following.
 // There are line breaks at the outermost array elements in the following example. The first point sheet contains line number 35 who was at fire school. The second point sheet for a fire overlaps and
 // the merged_linenumbers contains line numbers from both. The second point sheet doesn't have line number 35, but the individual should receive credit while at fire school.
@@ -107,7 +107,7 @@ class cls_pointsheet_overlap {
 
     // The following pseudo-code determines how PS header and detail are checked and kept if there are overlaps:
     // 1. read row from pointsheet dataset;
-    //    if this is the first row read, initially load the "keep" variables (used to compare the next read);
+    //    if this is the first row read, initially load the "keep" variables (used to compare the next row that will be read);
     // 2. else if the "keep" previous row ending date is greater than the current row starting date, possible overlap! Add to arrays with PS header and detail data;
     // 3. else (to line #2, but now previous row's ending date <= previous starting date)
     //    if there is data in "keep" variables (i.e., two point sheets overlap), begin audit of PS headers and line numbers. Add array to all_data array if audit passes.
