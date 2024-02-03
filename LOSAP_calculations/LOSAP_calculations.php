@@ -118,12 +118,13 @@ class cls_LOSAP_calculations {
   }
 
 
-  // This function can be called to determine either achieved or credited LOSAP fire percentage.
+  // This function can determine either achieved or credited LOSAP fire percentage.
   function fct_alarm_percent_floor($arg_LOSAP_fires, $arg_LOSAP_fires_total){
     if((is_numeric($arg_LOSAP_fires_total)) and $arg_LOSAP_fires_total != 0){
       $LOSAP_fire_percent = round($arg_LOSAP_fires / $arg_LOSAP_fires_total * 100.0, 1);
       $LOSAP_fire_floor = floor($LOSAP_fire_percent / 10.0) * 10;
       // Adjust calculation for range of 20-39 percent (bug fix 12/31/2022). Previously, 30% = 30 points
+      // Based on Hardyston ordinance.
       if($LOSAP_fire_floor == 30){
         $LOSAP_fire_floor = 20;
       }
@@ -141,7 +142,7 @@ class cls_LOSAP_calculations {
 
 
   // This function will determine the highest LOSAP office a member can hold
-  // Note Hardyston does not allow LOSAP credit for more than one office.
+  // Note: Hardyston does not allow LOSAP credit for more than one office.
   function fct_LOSAP_officer($arg_membernbr){
     $this->LOSAP_officercode = 0;
     $this->LOSAP_creditedofficer = 0;

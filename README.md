@@ -9,7 +9,7 @@ The computer-based Point System was placed in production starting in the 2000 po
 2. department Points: This included the Clothing Allowance points above, but also quasi-department level activities (e.g., parades, committees, etc.)
 3. Miscellaneous: This includes all categories of work performed.  
 
-In 2000, the department joined the NJ State Firemen's Association (NJSFA). This required a township ordinance that formally recognized that, among other things, the department is accountable to the township administration. The township also enacted the state approved "Length of Service Awards Program" (LOSAP) system for establishing 401k-style retirement accounts. Both of these had their own methods of calculations. So in essence, there were five sets of books for calculating a member's standing and benefits.
+In 2000, the department joined the NJ State Firemen's Association (NJSFA). This required a township ordinance that formally recognized that, among other things, the department is accountable to the township administration. The township also enacted the state approved "Length of Service Awards Program" (LOSAP) system for establishing 401k-style retirement accounts. Both of these have their own methods of calculations. So in essence, there were five sets of books for calculating a member's standing and benefits.
 
 In 2014(?), the department approved that all points' categories would now be rolled into the same category as Clothing Allowance. The MSAccess system was changed accordingly to handle the three sets of books. This reduced the number of "books" and calculations from five to three:
 1. One standard for calculating the department's clothing allowance and exemption/life membership;
@@ -47,7 +47,8 @@ The sections are:
 2. LOSAP/NJSFA calculations;
 3. Scriptcase custom code;
 4. Point Sheet Details;
-5. SQL
+5. Point Sheet Overlap Audit;
+6. SQL
 
 #### Custom web pages
 The custom web pages are still initialized in Scriptcase. There is minimal code as the initialization points to a folder structure outside of the wwwroot folder structure.
@@ -60,6 +61,8 @@ The LOSAP/NJSFA calculations contain custom code for calculating LOSAP and NJ St
 The Scriptcase custom code contains the PHP script that is embedded in the app_Login event (in the Security folder) of the Scriptcase Point System project. This code checks the Geolocate subsystem to determine if the login screen should appear or if the user gets an HTTP 403 (forbidden) screen.
 
 The Point Sheet Details contains custom webpages that allows entry of members' line numbers on a point sheet. The webpage displays the currently active members via line number. The members can be selected via checkbox.
+
+The Point Sheet Overlap page [README.md](https://github.com/mosterho/HTVFDPoints/tree/main/Pointsheet_overlap) determines if the ending time of one point sheet is greater than the starting date of another. At least one of the point sheets must be a department-level point sheet (e.g., fire, drill, etc.). This will assist the Vice President in determining whether an individual should get credit for a department-wide point sheet while he/she was on department business (e.g., person was at fire school and so was unavailable to attend a fire call).
 
 SQL contains a working copy of a fairly complex SQL statement using Common Table Expression (CTE). This is used in two reports that require the Roster, total department points, total possible department points, members actual points and LOSAP achieved in one report (see Monthly Percentages). Please note that the WHERE clauses contain custom Scriptcase global variables for member status and point year.  Please look for the [] in the WHERE clauses.
 
